@@ -44,7 +44,7 @@
 //	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>); // 创建点云（指针）
 //	if (pcl::io::loadPCDFile<pcl::PointXYZ>("yuanshi.pcd", *cloud) == -1) //* 读入PCD格式的文件，如果文件不存在，返回-1
 //	{
-//		//std::cout<<"Couldn't read file test_pcd.pcd \n"<<std::endl; //文件不存在时，返回错误，终止程序。
+//		std::cout<<"Couldn't read file test_pcd.pcd \n"<<std::endl; //文件不存在时，返回错误，终止程序。
 //		system("pause");
 //		return (-1);
 //	}
@@ -80,7 +80,7 @@
 //	cout << "Point cloud saved." << endl;
 //
 ///*s
-//	//方法二：体素滤波器实现下采样
+//	方法二：体素滤波器实现下采样
 //	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_after_voxelgrid(new pcl::PointCloud<pcl::PointXYZ>);//
 //	pcl::VoxelGrid<pcl::PointXYZ> voxelgrid;
 //	voxelgrid.setInputCloud(cloud);//输入点云数据
@@ -88,7 +88,7 @@
 //	voxelgrid.filter(*cloud_after_voxelgrid);
 //	std::cout << "体素化网格方法后点云数据点数：" << cloud_after_voxelgrid->points.size() << std::endl;
 //
-//	//方法三：统计滤波器滤波
+//	方法三：统计滤波器滤波
 //	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_after_StatisticalRemoval(new pcl::PointCloud<pcl::PointXYZ>);//
 //	pcl::StatisticalOutlierRemoval<pcl::PointXYZ> Statistical;
 //	Statistical.setInputCloud(cloud);
@@ -97,7 +97,7 @@
 //	Statistical.filter(*cloud_after_StatisticalRemoval);
 //	std::cout << "统计分析滤波后点云数据点数：" << cloud_after_StatisticalRemoval->points.size() << std::endl;
 //
-//	//方法四：条件滤波器
+//	方法四：条件滤波器
 //	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_after_Condition(new pcl::PointCloud<pcl::PointXYZ>);
 //	pcl::ConditionAnd<pcl::PointXYZ>::Ptr range_condition(new pcl::ConditionAnd<pcl::PointXYZ>());
 //	range_condition->addComparison(pcl::FieldComparison<pcl::PointXYZ>::ConstPtr(new
@@ -111,7 +111,7 @@
 //	condition.filter(*cloud_after_Condition);
 //	std::cout << "条件滤波后点云数据点数：" << cloud_after_Condition->points.size() << std::endl;
 //
-//	//方法五：半径滤波器
+//	方法五：半径滤波器
 //	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_after_Radius(new pcl::PointCloud<pcl::PointXYZ>);
 //	pcl::RadiusOutlierRemoval<pcl::PointXYZ> radiusoutlier;  //创建滤波器
 //	radiusoutlier.setInputCloud(cloud);    //设置输入点云
@@ -124,6 +124,6 @@
 //
 //	int a;
 //	std::cin >> a;
-//	return (0);
+//	return 0;
 //
 //}
