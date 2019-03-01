@@ -18,31 +18,30 @@
 //int main(int argc, char** argv)
 //{
 //	/*创建点云数据集。*/
-//	/*pcl::PointCloud<pcl::PointXYZI>::Ptr cloud1(new pcl::PointCloud<pcl::PointXYZI>);
-//	cloud1->width = 500;
-//	cloud1->height = 1;
-//	cloud1->points.resize(cloud1->width*cloud1->height);
-//	std::cout << "创建原始点云数据" << std::endl;
-//	for (size_t i = 0; i < cloud1->points.size(); ++i)
-//	{
-//		cloud1->points[i].x = 1024 * rand() / (RAND_MAX + 1.0f);
-//		cloud1->points[i].y = 1024 * rand() / (RAND_MAX + 1.0f);
-//		cloud1->points[i].z = 1024 * rand() / (RAND_MAX + 1.0f);
-//	}
-//	for (size_t i = 0; i < cloud1->points.size(); i++)
-//	{
-//		std::cerr << " " << cloud1->points[i].x << " "
-//			<< cloud1->points[i].y << " "
-//			<< cloud1->points[i].z << std::endl;
-//	}
-//	std::cout << "原始点云数据点数：" << cloud1->points.size() << std::endl ;
-//	pcl::io::savePCDFile("yuanshi.pcd", *cloud1);
-//	cout << "Point cloud saved." << endl;
-//*/
+//	//pcl::PointCloud<pcl::PointXYZI>::Ptr cloud1(new pcl::PointCloud<pcl::PointXYZI>);
+//	//cloud1->width = 500;
+//	//cloud1->height = 1;
+//	//cloud1->points.resize(cloud1->width*cloud1->height);
+//	//std::cout << "创建原始点云数据" << std::endl;
+//	//for (size_t i = 0; i < cloud1->points.size(); ++i)
+//	//{
+//	//	cloud1->points[i].x = 1024 * rand() / (RAND_MAX + 1.0f);
+//	//	cloud1->points[i].y = 1024 * rand() / (RAND_MAX + 1.0f);
+//	//	cloud1->points[i].z = 1024 * rand() / (RAND_MAX + 1.0f);
+//	//}
+//	//for (size_t i = 0; i < cloud1->points.size(); i++)
+//	//{
+//	//	std::cerr << " " << cloud1->points[i].x << " "
+//	//		<< cloud1->points[i].y << " "
+//	//		<< cloud1->points[i].z << std::endl;
+//	//}
+//	//std::cout << "原始点云数据点数：" << cloud1->points.size() << std::endl ;
+//	//pcl::io::savePCDFile("yuanshi.pcd", *cloud1);
+//	//cout << "Point cloud saved." << endl;
 //
 //	//读取点云数据
 //	pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>); // 创建点云（指针）
-//	if (pcl::io::loadPCDFile<pcl::PointXYZI>("src.pcd", *cloud) == -1) //* 读入PCD格式的文件，如果文件不存在，返回-1
+//	if (pcl::io::loadPCDFile<pcl::PointXYZI>("yuanshi.pcd", *cloud) == -1) //* 读入PCD格式的文件，如果文件不存在，返回-1
 //	{
 //		std::cout<<"Couldn't read file test_pcd.pcd \n"<<std::endl; //文件不存在时，返回错误，终止程序。
 //		system("pause");
