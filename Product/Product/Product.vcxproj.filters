@@ -38,5 +38,8 @@
     <ClInclude Include="..\..\..\..\..\桌面暂用\kinect2.0-opencv-master\myKinect.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MyPCL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
