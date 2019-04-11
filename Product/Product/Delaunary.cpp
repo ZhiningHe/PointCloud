@@ -1,19 +1,6 @@
 ﻿////三维重构之泊松重构
 //
-//#include <pcl/point_types.h>
-//#include <pcl/io/pcd_io.h>
-//#include <pcl/io/ply_io.h>
-//#include <pcl/kdtree/kdtree_flann.h>
-//#include <pcl/features/normal_3d_omp.h>
-//#include <pcl/features/normal_3d.h>
-//#include <pcl/surface/gp3.h>
-//#include <pcl/surface/poisson.h>
-//#include <pcl/visualization/pcl_visualizer.h>
-//#include <fstream>
-//#include <iostream>
-//#include <stdio.h>
-//#include <string.h>
-//#include <string>
+//#include "MyPCL.h"
 //
 //int main(int argc, char** argv)
 //{
@@ -96,6 +83,7 @@
 //	viewer->addPolygonMesh(mesh, "my");
 //	viewer->addCoordinateSystem(50.0);
 //	viewer->initCameraParameters();
+//
 //	while (!viewer->wasStopped()) {
 //		viewer->spinOnce(100);
 //		boost::this_thread::sleep(boost::posix_time::microseconds(100000));
@@ -103,3 +91,4 @@
 //
 //	return 0;
 //}
+//
