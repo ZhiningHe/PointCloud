@@ -20,14 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Delaunary.cpp" />
-    <ClCompile Include="Depth.cpp" />
-    <ClCompile Include="myKinect.cpp" />
     <ClCompile Include="filterWaves.cpp" />
+    <ClCompile Include="harris.cpp" />
     <ClCompile Include="TanLan.cpp" />
-    <ClCompile Include="Topcd.cpp" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\桌面暂用\kinect2.0-opencv-master\myKinect.h" />
+    <ClInclude Include="harris.h" />
+    <ClInclude Include="MyPCL.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

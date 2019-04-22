@@ -18,19 +18,16 @@
     <ClCompile Include="filterWaves.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Topcd.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Delaunary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TanLan.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="myKinect.cpp">
+    <ClCompile Include="harris.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Depth.cpp">
+    <ClCompile Include="test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,6 +36,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MyPCL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="harris.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
