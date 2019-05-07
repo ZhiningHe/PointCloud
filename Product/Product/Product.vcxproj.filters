@@ -15,19 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="filterWaves.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Delaunary.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TanLan.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="harris.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="defog1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
