@@ -10,8 +10,7 @@ using namespace cv;
 const double w = 0.95;
 const int r = 7;
 
-//计算全球大气光强A
-//src为输入的带雾图像，darkChannelImg为暗通道图像，r为最小值滤波的窗口半径
+//计算暗通道影像
 Mat getDarkChannelImg(const Mat src, const int r)
 {
 	int height = src.rows;
@@ -51,6 +50,7 @@ Mat getDarkChannelImg(const Mat src, const int r)
 	return darkChannelImg;
 }
 
+//计算A
 double getGlobelAtmosphericLight(const Mat darkChannelImg)
 {
 	//这里是简化的处理方式,A的最大值限定为220
@@ -62,6 +62,7 @@ double getGlobelAtmosphericLight(const Mat darkChannelImg)
 	return A;
 }
 
+//tx
 Mat getTransimissionImg(const Mat darkChannelImg, const double A)
 {
 	cv::Mat transmissionImg(darkChannelImg.size(), CV_8UC1);
@@ -78,6 +79,7 @@ Mat getTransimissionImg(const Mat darkChannelImg, const double A)
 	return transmissionImg;
 }
 
+//导向滤波
 Mat fastGuidedFilter(cv::Mat I_org, cv::Mat p_org, int r, double eps, int s)
 {
 	/*
@@ -152,29 +154,7 @@ Mat fastGuidedFilter(cv::Mat I_org, cv::Mat p_org, int r, double eps, int s)
 	return q1;
 }
 
-void FastGuidedFilter(Mat I, Mat p, Mat dst, int r, double eps, int s)
-{
-	std::vector<Mat> bgr_I, bgr_p, bgr_dst;
-	split(I, bgr_I);//分解每个通道  
-	split(p, bgr_p);
-
-	for (int i = 0; i < 3; i++)
-	{
-
-		Mat I = bgr_I[i];
-		Mat p = bgr_p[i];
-
-		Mat q = fastGuidedFilter(I, p, r, eps, s);
-		bgr_dst.push_back(q);
-	}
-
-	Mat dst_color;
-	merge(bgr_dst, dst_color);
-
-	dst = dst_color.clone();
-	//cv::imshow("dst", dst);
-}
-
+//去雾操作
 Mat getDehazedChannel(cv::Mat srcChannel, cv::Mat transmissionChannel, double A)
 {
 	double tmin = 0.1;
@@ -195,6 +175,7 @@ Mat getDehazedChannel(cv::Mat srcChannel, cv::Mat transmissionChannel, double A)
 	return dehazedChannel;
 }
 
+//去雾
 Mat getDehazedImg_guidedFilter(Mat src, Mat darkChannelImg)
 {
 	cv::Mat dehazedImg = cv::Mat::zeros(src.rows, src.cols, CV_8UC3);
@@ -202,35 +183,36 @@ Mat getDehazedImg_guidedFilter(Mat src, Mat darkChannelImg)
 	cv::Mat transmissionImg(src.rows, src.cols, CV_8UC3);
 	cv::Mat fineTransmissionImg(src.rows, src.cols, CV_8UC3);
 	std::vector < cv::Mat> srcChannel, dehazedChannel, transmissionChannel, fineTransmissionChannel;
-
+	//A
 	cv::split(src, srcChannel);
 	double A0 = getGlobelAtmosphericLight(darkChannelImg);
 	double A1 = getGlobelAtmosphericLight(darkChannelImg);
 	double A2 = getGlobelAtmosphericLight(darkChannelImg);
-
+	//tx
 	cv::split(transmissionImg, transmissionChannel);
 	transmissionChannel[0] = getTransimissionImg(darkChannelImg, A0);
 	transmissionChannel[1] = getTransimissionImg(darkChannelImg, A1);
 	transmissionChannel[2] = getTransimissionImg(darkChannelImg, A2);
-
+	//滤波
 	cv::split(fineTransmissionImg, fineTransmissionChannel);
 	fineTransmissionChannel[0] = fastGuidedFilter(srcChannel[0], transmissionChannel[0], 64, 0.01, 8);
 	fineTransmissionChannel[1] = fastGuidedFilter(srcChannel[1], transmissionChannel[1], 64, 0.01, 8);
 	fineTransmissionChannel[2] = fastGuidedFilter(srcChannel[2], transmissionChannel[2], 64, 0.01, 8);
-
+	//合成
 	merge(fineTransmissionChannel, fineTransmissionImg);
 	imshow("fineTransmissionChannel", fineTransmissionImg);
-
+	
 	cv::split(dehazedImg, dehazedChannel);
 	dehazedChannel[0] = getDehazedChannel(srcChannel[0], fineTransmissionChannel[0], A0);
 	dehazedChannel[1] = getDehazedChannel(srcChannel[1], fineTransmissionChannel[1], A1);
 	dehazedChannel[2] = getDehazedChannel(srcChannel[2], fineTransmissionChannel[2], A2);
-
+	//合成
 	cv::merge(dehazedChannel, dehazedImg);
 
 	return dehazedImg;
 }
 
+//去雾
 Mat getDehazedImg(const Mat src, const Mat transmissionImage, const int A)
 {
 	double tmin = 0.1;
@@ -245,7 +227,7 @@ Mat getDehazedImg(const Mat src, const Mat transmissionImage, const int A)
 		{
 			double transmission = transmissionImage.at<uchar>(i, j);
 			srcData = src.at<Vec3b>(i, j);
-
+			//归一化tx
 			tmax = max(transmission / 255, tmin);
 			//(I-A)/t +A  
 			for (int c = 0; c < 3; c++)
@@ -257,36 +239,31 @@ Mat getDehazedImg(const Mat src, const Mat transmissionImage, const int A)
 	return dehazedImg;
 }
 
+
+
+
 int main(void)
 {
 	cv::Mat src, darkChanelImg;
-	src = imread("fog.jpg");
+	src = imread("sea.jpg");
 	if (src.empty())
 		std::cout << "Load Image Error!";
 
-	double t1 = (double)getTickCount();	//开始计时
+									double t1 = (double)getTickCount();	//开始计时
+									cout << "start:" << endl;
 	src.convertTo(src, CV_8U, 1, 0);
-
+	//暗通道图像
 	darkChanelImg = getDarkChannelImg(src, r);
 	cv::imshow("darkChanelImg", darkChanelImg);
-
-	double A = getGlobelAtmosphericLight(darkChanelImg);
-
-	Mat transmissionImage(darkChanelImg.size(), darkChanelImg.type());
-	transmissionImage = getTransimissionImg(darkChanelImg, A);
-
-
-	//Mat dehazedImg = Mat::zeros(src.rows, src.cols, CV_8UC3);
-	Mat dehazedImg, dehazedImg_guideFilter;
-	//dehazedImg = getDehazedImg(src, transmissionImage, A);
+	Mat  dehazedImg_guideFilter;
 	//导通滤波计算t（x）
 	dehazedImg_guideFilter = getDehazedImg_guidedFilter(src, darkChanelImg);
-	//结束时间
-	t1 = (double)getTickCount() - t1;
-	std::cout <<"去雾用时："<< 1000 * t1 / (getTickFrequency()) << "ms" << std::endl;
+
+									//结束时间
+									t1 = (double)getTickCount() - t1;
+									std::cout <<"去雾用时："<< 1000 * t1 / (getTickFrequency()) << "ms" << std::endl;
 
 	imshow("src", src);
-	//imshow("dehazedImg", dehazedImg);
 	imshow("dehazedImg_guideFilter", dehazedImg_guideFilter);
 	cvWaitKey(0);
 	return 0;
